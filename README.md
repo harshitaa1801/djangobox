@@ -56,27 +56,12 @@ docker-compose -f docker-compose-dev.yml up --build
 
 After setting up the project, you can create new Django apps for your features:
 
-### Method 1: Using Docker (Recommended)
-
 1. Create a new app inside the running container:
 ```bash
-# For development environment
-docker exec web python manage.py startapp your_app_name
-
-# For production environment
 docker exec web python manage.py startapp your_app_name
 ```
 
-### Method 2: Using Local Django
-
-1. If you have Django installed locally:
-```bash
-python manage.py startapp your_app_name
-```
-
-### After Creating an App
-
-1. Add your new app to `INSTALLED_APPS` in `main/settings.py`:
+2. Add your new app to `INSTALLED_APPS` in `main/settings.py`:
 ```python
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -89,20 +74,16 @@ INSTALLED_APPS = [
 ]
 ```
 
-2. Create your models, views, and URLs as needed
+3. Create your models, views, and URLs as needed
 
-3. Run migrations to apply any database changes:
+4. Run migrations to apply any database changes:
 ```bash
 # Using Docker
-docker-compose -f docker-compose-dev.yml exec web python manage.py makemigrations
-docker-compose -f docker-compose-dev.yml exec web python manage.py migrate
-
-# Or locally
-python manage.py makemigrations
-python manage.py migrate
+docker exec web python manage.py makemigrations
+docker exec web python manage.py migrate
 ```
 
-4. Include your app's URLs in `main/urls.py`:
+5. Include your app's URLs in `main/urls.py`:
 ```python
 from django.contrib import admin
 from django.urls import path, include
