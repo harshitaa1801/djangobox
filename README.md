@@ -10,13 +10,32 @@ A production-ready Django project template with Docker, PostgreSQL, and Nginx.
 - Environment-based configuration
 - Production-ready security settings
 
+## Prerequisites
+
+Before setting up this project, make sure you have the following installed on your system:
+
+- **Docker**: Version 20.0 or higher (includes Docker Compose)
+  - [Install Docker](https://docs.docker.com/get-docker/)
+  - Docker Compose is included with Docker Desktop and modern Docker installations
+- **Python**: Version 3.10 or higher
+  - [Download Python](https://www.python.org/downloads/)
+- **Git**: For version control
+  - [Install Git](https://git-scm.com/downloads/)
+
+
+### Verify Installation
+You can verify your installation by running:
+```bash
+docker --version
+```
+
 ## Quick Start
 
 ### Development Setup
 
 1. Clone the repository:
 ```bash
-git clone <your-repo-url>
+git clone https://github.com/harshitaa1801/djangobox.git
 cd djangobox
 ```
 
@@ -32,6 +51,74 @@ docker-compose -f docker-compose-dev.yml up --build
 ```
 
 4. Access the application at `http://localhost`
+
+## Creating a New Django App
+
+After setting up the project, you can create new Django apps for your features:
+
+### Method 1: Using Docker (Recommended)
+
+1. Create a new app inside the running container:
+```bash
+# For development environment
+docker exec web python manage.py startapp your_app_name
+
+# For production environment
+docker exec web python manage.py startapp your_app_name
+```
+
+### Method 2: Using Local Django
+
+1. If you have Django installed locally:
+```bash
+python manage.py startapp your_app_name
+```
+
+### After Creating an App
+
+1. Add your new app to `INSTALLED_APPS` in `main/settings.py`:
+```python
+INSTALLED_APPS = [
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+    'your_app_name',  # Add your app here
+]
+```
+
+2. Create your models, views, and URLs as needed
+
+3. Run migrations to apply any database changes:
+```bash
+# Using Docker
+docker-compose -f docker-compose-dev.yml exec web python manage.py makemigrations
+docker-compose -f docker-compose-dev.yml exec web python manage.py migrate
+
+# Or locally
+python manage.py makemigrations
+python manage.py migrate
+```
+
+4. Include your app's URLs in `main/urls.py`:
+```python
+from django.contrib import admin
+from django.urls import path, include
+from django.conf import settings
+from django.conf.urls.static import static
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('', include('your_app_name.urls')),  # Add this line
+]
+
+# Serve static and media files during development
+if settings.DEBUG:
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+```
 
 ### Production Setup
 
