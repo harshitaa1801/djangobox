@@ -147,3 +147,32 @@ djangobox/
 ├── entrypoint.sh           # Container entrypoint script
 └── requirements.txt        # Python dependencies
 ```
+
+## Future Enhancements
+
+The following features are planned for future releases to make this template even more comprehensive:
+
+### 🚀 **Performance & Scalability**
+- **Redis Integration**: Caching and session storage for improved performance
+- **Celery**: Background task processing for heavy operations
+- **Volume Mounts**: Live code reloading for faster development workflow
+
+### 📡 **API Development**
+- **Django REST Framework (DRF)**: Full-featured API development framework
+- **API Documentation**: Automatic API documentation with Swagger/OpenAPI
+- **JWT Authentication**: Token-based authentication for secure API access
+
+### 🔧 **DevOps & Monitoring**
+- **CI/CD Pipeline**: Automated testing and deployment with GitHub Actions
+- **Better Logging**: Structured logging with configurable levels and formats
+- **Health Checks**: Application and database health monitoring endpoints
+
+### 💡 **Want to Contribute?**
+These enhancements are welcome contributions! Feel free to:
+- Open an issue to discuss implementation
+- Submit a pull request with any of these features
+- Suggest additional features that would benefit the community
+
+---
+
+**Star ⭐ this repository if you find it useful!**
